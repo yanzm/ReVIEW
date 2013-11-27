@@ -37,9 +37,7 @@
 			<string>patagraph.review</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>(^={3}\[(column)\])\s(.*)</string>
-			<key>beginCaptures</key>
+			<key>captures</key>
 			<dict>
 				<key>1</key>
 				<dict>
@@ -58,10 +56,14 @@
 				</dict>
 			</dict>
 			<key>comment</key>
-			<string>Column ===[column] ... ===[/column]</string>
-			<key>end</key>
-			<string>(^={3}\[/(column)\])</string>
-			<key>endCaptures</key>
+			<string>Column ===[column]</string>
+			<key>match</key>
+			<string>(^={3}\[(column)\])\s(.*)</string>
+			<key>name</key>
+			<string>column.review.begin</string>
+		</dict>
+		<dict>
+			<key>captures</key>
 			<dict>
 				<key>1</key>
 				<dict>
@@ -74,8 +76,12 @@
 					<string>support.function.review</string>
 				</dict>
 			</dict>
+			<key>comment</key>
+			<string>Column ===[/column]</string>
+			<key>match</key>
+			<string>(^={3}\[/(column)\])</string>
 			<key>name</key>
-			<string>column.review</string>
+			<string>column.review.end</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -116,7 +122,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(list)\[([^\]]*)\]\[([^\]]*)\](\{)</string>
+			<string>^(//)(list)\[([^\]]*)\]\[((\\]|[^]])*)\](\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -139,7 +145,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -162,7 +168,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(emlist)(\[([^\]]*)\])?(\{)</string>
+			<string>^(//)(emlist)(\[((\\]|[^]])*)\])?(\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -180,7 +186,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -244,7 +250,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(listnum)\[([^\]]*)\]\[([^\]]*)\](\{)</string>
+			<string>^(//)(listnum)\[([^\]]*)\]\[((\\]|[^]])*)\](\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -267,7 +273,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -326,7 +332,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(image)\[([^\]]*)\]\[([^\]]*)\](\[([^\]]*)\])?(\{)</string>
+			<string>^(//)(image)\[([^\]]*)\](\[([^\]]*)\])?\[((\\]|[^]])*)\](\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -344,7 +350,7 @@
 					<key>name</key>
 					<string>variable.parameter.review</string>
 				</dict>
-				<key>4</key>
+				<key>5</key>
 				<dict>
 					<key>name</key>
 					<string>string.review</string>
@@ -354,7 +360,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>7</key>
+				<key>8</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -444,7 +450,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(graph)\[([^\]]*)\]\[(graphviz|gnuplot|blockdiag|aafigure)\](\[([^\]]*)\])?(\{)</string>
+			<string>^(//)(graph)\[([^\]]*)\]\[(graphviz|gnuplot|blockdiag|aafigure)\](\[((\\]|[^]])*)\])?(\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -472,7 +478,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>7</key>
+				<key>8</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -495,7 +501,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(table)\[([^\]]*)\]\[([^\]]*)\](\{)</string>
+			<string>^(//)(table)\[([^\]]*)\]\[((\\]|[^]])*)\](\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -518,7 +524,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -654,7 +660,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>^(//)(bibpaper)\[([^\]]*)\]\[([^\]]*)\](\{)</string>
+			<string>^(//)(bibpaper)\[([^\]]*)\]\[((\\]|[^]])*)\](\{)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -677,7 +683,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -941,7 +947,7 @@
 					<key>name</key>
 					<string>string.review</string>
 				</dict>
-				<key>5</key>
+				<key>6</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.review</string>
@@ -950,7 +956,7 @@
 			<key>comment</key>
 			<string>Inline instruction like @&lt;list&gt;{program} </string>
 			<key>match</key>
-			<string>(@&lt;)([a-z]+)(&gt;\{)([^\}]*)(\})</string>
+			<string>(@&lt;)([a-z]+)(&gt;\{)((\\}|[^}])*)(\})</string>
 			<key>name</key>
 			<string>instruction.inline.review</string>
 		</dict>
