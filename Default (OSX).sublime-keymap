@@ -1,0 +1,3 @@
+[
+	{ "keys": ["super+o"], "command": "review_jump" }
+]
