@@ -2,8 +2,6 @@
 import sublime, sublime_plugin, re
 
 class TypeScriptCompletionListener(sublime_plugin.EventListener):
-    #def __init__(self):
-    #    self.settings = sublime.load_settings("TypeScriptCompletion.sublime-settings");
 
     def get_completion(self, trigger, contents):
         return ([
