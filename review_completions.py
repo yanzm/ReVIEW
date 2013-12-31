@@ -10,17 +10,22 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
         if not view.file_name().endswith('.re'):
+            # .re ファイル以外は無視
             return []
 
         try:
+            # カーソル位置を含む行のRegion（行の最初から最後）を取得
             l = view.line(locations[0])
+            # 行の先頭からカーソルまでの文字を取得
             t = view.substr(sublime.Region(l.a, locations[0])).encode('utf-8')
 
+            # 直前の文字が #@hoge かどうかチェック
             m = re.search('(?<=#@)\w*$', t)
             if m != None:
                 tag = m.group(0)
 
                 if t.startswith('#@'):
+                    # 行頭が #@ の場合は、そのまま補完
                     return ([
                         ("#@mapfile\t#@mapfile( ... ) ... #@end", "#@mapfile($1)\n$2\n#@end"),
                         ("#@mapoutput\t#@mapoutput( ... ) ... #@end", "#@mapoutput($1)\n$2\n#@end"),
@@ -30,6 +35,7 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
                         ("#@warn\t#@warn( ... )", "#@warn($1)")
                     ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
                 else:
+                    # 行の途中から #@ の場合は、改行して補完
                     return ([
                         ("#@mapfile\t#@mapfile( ... ) ... #@end", "\n#@mapfile($1)\n$2\n#@end\n"),
                         ("#@mapoutput\t#@mapoutput( ... ) ... #@end", "\n#@mapoutput($1)\n$2\n#@end\n"),
@@ -39,7 +45,18 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
                         ("#@warn\t#@warn( ... )", "\n#@warn($1)\n")
                     ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
+            # 直前の文字が @<list>{ かどうかチェック
+            m = re.search('(?<=@<list>{)$', t)
+            if m != None:
+                regions = view.find_all("^//list")
+                print regions
 
+                return ([
+                    ("@uchar\t@<uchar>{ ... }", "@<uchar>{$1}")
+                ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+
+
+            # 直前の文字が @hoge かどうかチェック
             m = re.search('(?<=@)\w*$', t)
             if m != None:
                 tag = m.group(0)
@@ -76,6 +93,7 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
                     ("@uchar\t@<uchar>{ ... }", "@<uchar>{$1}")
                 ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
+            # 直前の文字が //hoge かどうかチェック
             m = re.search('(?<=//)\w*$', t)
             if m != None:
                 tag = m.group(0)
