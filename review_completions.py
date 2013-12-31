@@ -48,12 +48,14 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
             # 直前の文字が @<list>{ かどうかチェック
             m = re.search('(?<=@<list>{)$', t)
             if m != None:
-                regions = view.find_all("^//list")
-                print regions
+                regions = view.find_all("^//list\[[^]]*\]")
+                list_ids = []
+                for region in regions:
+                    m = re.search('^//list\[([^]]*)\]', view.substr(region))
+                    exp = m.group(1)
+                    list_ids.append((exp, exp))
 
-                return ([
-                    ("@uchar\t@<uchar>{ ... }", "@<uchar>{$1}")
-                ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+                return (list_ids, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 
             # 直前の文字が @hoge かどうかチェック
