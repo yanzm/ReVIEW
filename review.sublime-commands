@@ -1,3 +1,4 @@
 [
-    { "caption": "ReVIEW: Goto", "command": "review_jump" }
+    { "caption": "ReVIEW: Goto", "command": "review_jump" },
+    { "caption": "ReVIEW: Lint", "command": "review_lint" }
 ]
