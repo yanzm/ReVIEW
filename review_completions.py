@@ -1,6 +1,7 @@
 # coding:utf-8
 import sublime, sublime_plugin, re
 
+
 class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
     def get_completion(self, trigger, contents):
@@ -21,7 +22,7 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
             # 直前の文字が #@hoge かどうかチェック
             m = re.search('(?<=#@)\w*$', t)
-            if m != None:
+            if m is not None:
                 tag = m.group(0)
 
                 if t.startswith('#@'):
@@ -47,7 +48,7 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
             # 直前の文字が @<list>{ かどうかチェック
             m = re.search('(?<=@<list>{)$', t)
-            if m != None:
+            if m is not None:
                 regions = view.find_all("^//list\[[^]]*\]")
                 list_ids = []
                 for region in regions:
@@ -57,10 +58,9 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
                 return (list_ids, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
-
             # 直前の文字が @hoge かどうかチェック
             m = re.search('(?<=@)\w*$', t)
-            if m != None:
+            if m is not None:
                 tag = m.group(0)
 
                 return ([
@@ -97,7 +97,7 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
 
             # 直前の文字が //hoge かどうかチェック
             m = re.search('(?<=//)\w*$', t)
-            if m != None:
+            if m is not None:
                 tag = m.group(0)
 
                 if t.startswith('//'):
@@ -141,9 +141,8 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
                         ("//emlist\t//emlist{ ... //}", "\n\n//emlist{\n$1\n//}\n")
                     ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
-
         except:
-            print 'please save as utf-8'
+            print('please save as utf-8')
 
         return ([
             ("ami\t@<ami>{ ... }", "@<ami>{$1}"),
@@ -200,5 +199,3 @@ class TypeScriptCompletionListener(sublime_plugin.EventListener):
             ("warn\t#@warn( ... )", "#@warn($1)"),
             ("emlist\t//emlist{ ... //}", "//emlist{\n$1\n//}")
         ], sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
-
-
